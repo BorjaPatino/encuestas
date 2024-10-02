@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Encuesta</title>
+</head>
+<body>
+<h1>Nueva Encuesta</h1>
+<form th:action="@{/encuestas/new}" th:object="${encuesta}" method="post">
+    <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br />
+    <label>Apellidos: <input type="text" th:field="*{apellidos}" /></label><br />
+    <label>Email: <input type="text" th:field="*{email}" /></label><br />
+    <label>Edad: <input type="number" th:field="*{edad}" /></label><br />
+    <label>Teléfono: <input type="text" th:field="*{telefono}" /></label><br />
+    <label>Fecha de Estancia: <input type="date" th:field="*{fechaInicioEstancia}" /></label><br />
+    <label>Motivo de la Visita:
+        <select th:field="*{motivoVisita}">
+            <option value="">Seleccione</option>
+            <option value="Trabajo">Trabajo</option>
+            <option value="Estudios">Estudios</option>
+            <option value="Turismo">Turismo</option>
+            <option value="Otros">Otros</option>
+        </select>
+    </label><br />
+    <label>Servicios utilizados:
+        <input type="checkbox" th:value="'Restaurante'" th:field="*{serviciosUtilizados}" /> Restaurante
+        <input type="checkbox" th:value="'Gimnasio'" th:field="*{serviciosUtilizados}" /> Gimnasio
+        <input type="checkbox" th:value="'Spa'" th:field="*{serviciosUtilizados}" /> Spa
+        <input type="checkbox" th:value="'Piscina'" th:field="*{serviciosUtilizados}" /> Piscina
+        <input type="checkbox" th:value="'Room service'" th:field="*{serviciosUtilizados}" /> Room service
+    </label><br />
+    <label>Nivel de Satisfacción:
+        <input type="radio" th:field="*{nivelSatisfaccion}" value="Muy satisfecho" /> Muy satisfecho
+        <input type="radio" th:field="*{nivelSatisfaccion}" value="Satisfecho" /> Satisfecho
+        <input type="radio" th:field="*{nivelSatisfaccion}" value="Insatisfecho" /> Insatisfecho
+    </label><br />
+    <label>Comentarios: <textarea th:field="*{comentarios}"></textarea></label><br />
+    <input type="submit" value="Enviar Encuesta" />
+</form>
+</body>
+</html>

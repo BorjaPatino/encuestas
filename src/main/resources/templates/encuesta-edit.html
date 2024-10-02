@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Editar Encuesta</title>
+    </head>
+    <body>
+        <h1>Editar Encuesta</h1>
+        <form action="#" th:action="@{/encuestas/edit/{id}(id=${encuesta.id})}" th:object="${encuesta}" method="post">
+            <input type="text" th:field="*{nombre}" placeholder="Nombre" />
+            <input type="text" th:field="*{apellidos}" placeholder="Apellidos" />
+            <input type="email" th:field="*{email}" placeholder="Email" />
+            <input type="number" th:field="*{edad}" placeholder="Edad" />
+            <input type="text" th:field="*{telefono}" placeholder="Teléfono" />
+            <input type="date" th:field="*{fechaInicioEstancia}" placeholder="Fecha de Inicio" />
+            <input type="text" th:field="*{motivoVisita}" placeholder="Motivo de Visita" />
+            <!-- Agrega más campos según sea necesario -->
+            <button type="submit">Actualizar</button>
+
+        </form>
+
+    </body>
+</html>
