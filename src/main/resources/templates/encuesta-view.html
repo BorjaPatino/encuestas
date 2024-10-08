@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Ver Encuesta</title>
-    </head>
-    <body>
-        <h1 th:text="${encuesta.nombre}"></h1>
-        <p><strong>Apellidos:</strong> <span th:text="${encuesta.apellidos}"></span></p>
-        <p><strong>Email:</strong> <span th:text="${encuesta.email}"></span></p>
-        <p><strong>Edad:</strong> <span th:text="${encuesta.edad}"></span></p>
-        <p><strong>Teléfono:</strong> <span th:text="${encuesta.telefono}"></span></p>
-        <p><strong>Fecha de Estancia:</strong> <span th:text="${encuesta.fechaInicioEstancia}"></span></p>
-        <p><strong>Motivo de la Visita:</strong> <span th:text="${encuesta.motivoVisita}"></span></p>
-        <p><strong>Servicios utilizados:</strong> <span th:text="${encuesta.serviciosUtilizados}"></span></p>
-        <p><strong>Nivel de Satisfacción:</strong> <span th:text="${encuesta.nivelSatisfaccion}"></span></p>
-        <p><strong>Comentarios:</strong> <span th:text="${encuesta.comentarios}"></span></p>
-        <a th:href="@{/encuestas}">Volver al listado</a>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Encuesta</title>
+</head>
+<body>
+<h1 th:text="${encuesta.nombre}"></h1>
+<p><strong>Apellidos:</strong> <span th:text="${encuesta.apellidos}"></span></p>
+<p><strong>Email:</strong> <span th:text="${encuesta.email}"></span></p>
+<p><strong>Edad:</strong> <span th:text="${encuesta.edad}"></span></p>
+<p><strong>Teléfono:</strong> <span th:text="${encuesta.telefono}"></span></p>
+<p><strong>Fecha de Estancia:</strong> <span th:text="${encuesta.fechaInicioEstancia}"></span></p>
+<p><strong>Motivo de la Visita:</strong> <span th:text="${encuesta.motivoVisita}"></span></p>
+<p><strong>Servicios utilizados:</strong></p>
+<ul>
+    <th:block th:each="servicio : ${encuesta.serviciosUtilizados}">
+        <li th:text="${servicio}"></li>
+    </th:block>
+</ul>
+<p><strong>Nivel de Satisfacción:</strong> <span th:text="${encuesta.nivelSatisfaccion}"></span></p>
+<p><strong>Comentarios:</strong> <span th:text="${encuesta.comentarios}"></span></p>
+<a th:href="@{/encuestas}">Volver al listado</a>
+</body>
 </html>

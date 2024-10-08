@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Editar Encuesta</title>
-    </head>
-    <body>
-        <h1>Editar Encuesta</h1>
-        <form action="#" th:action="@{/encuestas/edit/{id}(id=${encuesta.id})}" th:object="${encuesta}" method="post">
-            <input type="text" th:field="*{nombre}" placeholder="Nombre" />
-            <input type="text" th:field="*{apellidos}" placeholder="Apellidos" />
-            <input type="email" th:field="*{email}" placeholder="Email" />
-            <input type="number" th:field="*{edad}" placeholder="Edad" />
-            <input type="text" th:field="*{telefono}" placeholder="Teléfono" />
-            <input type="date" th:field="*{fechaInicioEstancia}" placeholder="Fecha de Inicio" />
-            <input type="text" th:field="*{motivoVisita}" placeholder="Motivo de Visita" />
-            <!-- Agrega más campos según sea necesario -->
-            <button type="submit">Actualizar</button>
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Encuesta</title>
+</head>
+<body>
+<h1>Editar Encuesta</h1>
+<form action="#" th:action="@{/encuestas/edit/{id}(id=${encuesta.id})}" th:object="${encuesta}" method="post">
+    <input type="hidden" th:field="*{id}" /> <!-- Campo oculto para enviar el ID -->
 
-        </form>
+    <label>Nombre: <input type="text" th:field="*{nombre}" placeholder="Nombre" /></label><br />
+    <label>Apellidos: <input type="text" th:field="*{apellidos}" placeholder="Apellidos" /></label><br />
+    <label>Email: <input type="email" th:field="*{email}" placeholder="Email" /></label><br />
+    <label>Edad: <input type="number" th:field="*{edad}" placeholder="Edad" /></label><br />
+    <label>Teléfono: <input type="text" th:field="*{telefono}" placeholder="Teléfono" /></label><br />
+    <label>Fecha de Estancia: <input type="date" th:field="*{fechaInicioEstancia}" placeholder="Fecha de Estancia" /></label><br />
+    <label>Motivo de la Visita:
+        <select th:field="*{motivoVisita}">
+            <option value="">Seleccione</option>
+            <option value="Trabajo" th:selected="${encuesta.motivoVisita == 'Trabajo'}">Trabajo</option>
+            <option value="Estudios" th:selected="${encuesta.motivoVisita == 'Estudios'}">Estudios</option>
+            <option value="Turismo" th:selected="${encuesta.motivoVisita == 'Turismo'}">Turismo</option>
+            <option value="Otros" th:selected="${encuesta.motivoVisita == 'Otros'}">Otros</option>
+        </select>
+    </label><br />
 
-    </body>
+    <!-- Checkboxes para Servicios Utilizados -->
+    <label>Servicios utilizados:</label><br />
+    <label><input type="checkbox" th:value="'Restaurante'" th:field="*{serviciosUtilizados}" /> Restaurante</label><br />
+    <label><input type="checkbox" th:value="'Gimnasio'" th:field="*{serviciosUtilizados}" /> Gimnasio</label><br />
+    <label><input type="checkbox" th:value="'Spa'" th:field="*{serviciosUtilizados}" /> Spa</label><br />
+    <label><input type="checkbox" th:value="'Piscina'" th:field="*{serviciosUtilizados}" /> Piscina</label><br />
+    <label><input type="checkbox" th:value="'Room service'" th:field="*{serviciosUtilizados}" /> Room service</label><br />
+
+    <!-- Radios para Nivel de Satisfacción -->
+    <label>Nivel de Satisfacción:</label><br />
+    <label><input type="radio" th:field="*{nivelSatisfaccion}" value="Muy satisfecho" /> Muy satisfecho</label><br />
+    <label><input type="radio" th:field="*{nivelSatisfaccion}" value="Satisfecho" /> Satisfecho</label><br />
+    <label><input type="radio" th:field="*{nivelSatisfaccion}" value="Insatisfecho" /> Insatisfecho</label><br />
+
+    <label>Comentarios: <textarea th:field="*{comentarios}" placeholder="Comentarios"></textarea></label><br />
+
+    <button type="submit">Actualizar Encuesta</button>
+</form>
+</body>
 </html>

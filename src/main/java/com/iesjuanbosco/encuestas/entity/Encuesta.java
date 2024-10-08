@@ -3,6 +3,7 @@ package com.iesjuanbosco.encuestas.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List; // Importar List
 import java.util.Arrays;
 
 @Entity
@@ -39,7 +40,9 @@ public class Encuesta {
     @NotBlank(message = "El motivo de la visita es obligatorio.")
     private String motivoVisita;
 
-    private String[] serviciosUtilizados;
+    // Cambiar de String[] a List<String>
+    @ElementCollection
+    private List<String> serviciosUtilizados;
 
     @NotBlank(message = "Debe seleccionar un nivel de satisfacción.")
     private String nivelSatisfaccion;
@@ -52,7 +55,7 @@ public class Encuesta {
 
     // Constructor con parámetros
     public Encuesta(Long id, String nombre, String apellidos, String email, Integer edad, String telefono,
-                    LocalDate fechaInicioEstancia, String motivoVisita, String[] serviciosUtilizados,
+                    LocalDate fechaInicioEstancia, String motivoVisita, List<String> serviciosUtilizados, // List aquí
                     String nivelSatisfaccion, String comentarios) {
         this.id = id;
         this.nombre = nombre;
@@ -62,7 +65,7 @@ public class Encuesta {
         this.telefono = telefono;
         this.fechaInicioEstancia = fechaInicioEstancia;
         this.motivoVisita = motivoVisita;
-        this.serviciosUtilizados = serviciosUtilizados;
+        this.serviciosUtilizados = serviciosUtilizados; // List aquí
         this.nivelSatisfaccion = nivelSatisfaccion;
         this.comentarios = comentarios;
     }
@@ -133,11 +136,11 @@ public class Encuesta {
         this.motivoVisita = motivoVisita;
     }
 
-    public String[] getServiciosUtilizados() {
+    public List<String> getServiciosUtilizados() { // Cambio a List aquí
         return serviciosUtilizados;
     }
 
-    public void setServiciosUtilizados(String[] serviciosUtilizados) {
+    public void setServiciosUtilizados(List<String> serviciosUtilizados) { // Cambio a List aquí
         this.serviciosUtilizados = serviciosUtilizados;
     }
 
@@ -169,7 +172,7 @@ public class Encuesta {
                 ", telefono='" + telefono + '\'' +
                 ", fechaInicioEstancia=" + fechaInicioEstancia +
                 ", motivoVisita='" + motivoVisita + '\'' +
-                ", serviciosUtilizados=" + Arrays.toString(serviciosUtilizados) +
+                ", serviciosUtilizados=" + serviciosUtilizados + // Ajuste aquí
                 ", nivelSatisfaccion='" + nivelSatisfaccion + '\'' +
                 ", comentarios='" + comentarios + '\'' +
                 '}';

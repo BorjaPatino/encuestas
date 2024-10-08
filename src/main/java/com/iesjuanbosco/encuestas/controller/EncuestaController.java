@@ -63,11 +63,11 @@ public class EncuestaController {
     @PostMapping("/encuestas/edit/{id}")
     public String updateEncuesta(@PathVariable Long id, @Valid @ModelAttribute Encuesta encuesta, BindingResult result) {
         if (result.hasErrors()) {
-            return "encuesta-edit";
+            return "encuesta-edit"; // Asegúrate de que "encuesta-edit" sea el nombre correcto de la vista
         }
-        encuesta.setId(id);
-        encuestaRepository.save(encuesta);
-        return "redirect:/encuestas";
+        encuesta.setId(id); // Asegúrate de que el ID sea correcto
+        encuestaRepository.save(encuesta); // Guarda la encuesta actualizada
+        return "redirect:/encuestas"; // Redirige a la lista de encuestas
     }
 
     @GetMapping("/encuestas/view/{id}")
