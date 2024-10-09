@@ -5,6 +5,26 @@
     <title>Listado de Encuestas</title>
 </head>
 <body>
+<form action="#" th:action="@{/encuestas}" method="get">
+    <input type="text" name="filtro" placeholder="Filtrar por nombre" th:value="${param.filtro}">
+    <select name="nivelSatisfaccion" th:value="${param.nivelSatisfaccion}">
+        <option value="">Todos</option>
+        <option value="Muy satisfecho">Muy satisfecho</option>
+        <option value="Satisfecho">Satisfecho</option>
+        <option value="Insatisfecho">Insatisfecho</option>
+    </select>
+    <button type="submit">Buscar</button>
+</form>
+
+
+<h2>Estadísticas</h2>
+<p>Total de encuestas: <span th:text="${totalEncuestas}">0</span></p>
+<p>Promedio de edad de los encuestados: <span th:text="${promedioEdad}">0</span></p>
+<p>Porcentaje Muy Satisfechos: <span th:text="${porcentajeMuySatisfechos}">0</span>%</p>
+<p>Porcentaje Satisfechos: <span th:text="${porcentajeSatisfechos}">0</span>%</p>
+<p>Porcentaje Insatisfechos: <span th:text="${porcentajeInsatisfechos}">0</span>%</p>
+
+
 <h1>Listado de Encuestas</h1>
 <a th:href="@{/encuestas/new}">Nueva Encuesta</a>
 <table>

@@ -8,9 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Controller
 public class EncuestaController {
@@ -22,12 +27,7 @@ public class EncuestaController {
         this.encuestaRepository = encuestaRepository;
     }
 
-    @GetMapping("/encuestas")
-    public String findAll(Model model) {
-        List<Encuesta> encuestas = encuestaRepository.findAll();
-        model.addAttribute("encuestas", encuestas);
-        return "encuesta-list";
-    }
+
 
     @GetMapping("/encuestas/new")
     public String newEncuesta(Model model) {
@@ -79,4 +79,54 @@ public class EncuestaController {
         }
         return "redirect:/encuestas";
     }
+
+    @GetMapping("/encuestas")
+    public String findAll(@RequestParam(required = false) String filtro,
+                          @RequestParam(required = false) String nivelSatisfaccion,
+                          Model model) {
+        List<Encuesta> encuestas = encuestaRepository.findAll();
+
+        // Filtrar por nombre
+        if (filtro != null && !filtro.isEmpty()) {
+            encuestas = encuestas.stream()
+                    .filter(encuesta -> encuesta.getNombre().toLowerCase().contains(filtro.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        // Filtrar por nivel de satisfacción
+        if (nivelSatisfaccion != null && !nivelSatisfaccion.isEmpty()) {
+            encuestas = encuestas.stream()
+                    .filter(encuesta -> nivelSatisfaccion.equals(encuesta.getNivelSatisfaccion()))
+                    .collect(Collectors.toList());
+        }
+
+        // Calcular estadísticas
+        long totalEncuestas = encuestas.size();
+        double promedioEdad = encuestas.stream().mapToInt(Encuesta::getEdad).average().orElse(0);
+
+        // Distribución de niveles de satisfacción
+        long muySatisfechos = encuestas.stream().filter(encuesta -> "Muy satisfecho".equals(encuesta.getNivelSatisfaccion())).count();
+        long satisfechos = encuestas.stream().filter(encuesta -> "Satisfecho".equals(encuesta.getNivelSatisfaccion())).count();
+        long insatisfechos = encuestas.stream().filter(encuesta -> "Insatisfecho".equals(encuesta.getNivelSatisfaccion())).count();
+
+        double porcentajeMuySatisfechos = totalEncuestas > 0 ? (double) muySatisfechos / totalEncuestas * 100 : 0;
+        double porcentajeSatisfechos = totalEncuestas > 0 ? (double) satisfechos / totalEncuestas * 100 : 0;
+        double porcentajeInsatisfechos = totalEncuestas > 0 ? (double) insatisfechos / totalEncuestas * 100 : 0;
+
+        // Añadir datos al modelo
+        model.addAttribute("encuestas", encuestas);
+        model.addAttribute("totalEncuestas", totalEncuestas);
+        model.addAttribute("promedioEdad", promedioEdad);
+        model.addAttribute("porcentajeMuySatisfechos", porcentajeMuySatisfechos);
+        model.addAttribute("porcentajeSatisfechos", porcentajeSatisfechos);
+        model.addAttribute("porcentajeInsatisfechos", porcentajeInsatisfechos);
+
+        return "encuesta-list";
+    }
+
+
+
+
+
+
 }
